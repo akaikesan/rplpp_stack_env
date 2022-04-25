@@ -1,4 +1,5 @@
 created by .ignore support plugin (hsz.mobi)
+*.swp
 stack.yaml.lock
 ### macOS template
 *.DS_Store
