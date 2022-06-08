@@ -216,12 +216,7 @@ tcStatement s =
                  then catchError (checkArgument (t1, t2)) (\_ -> checkArgument (t2, t1))
                  else expectType (if isNothing e1 then t1 else getArrayType t1) (if isNothing e2 then t2 else getArrayType t2)
 
-        (Print tp (n, e)) -> 
-            do t <- getType n
-               _ <- tcExpression e
-               case tp of
-                 "int" -> expectType t IntegerArrayType
-                 _     -> expectType t (ObjectArrayType tp) 
+        (Print n) -> pure ()
            
         (ArrayConstruction (tp, e) n) -> 
             do t <- getType n

@@ -325,10 +325,11 @@ cgSwap n1 n2 = if n1 == n2 then return [] else
 
 
 -- | Code generation for print        
-cgPrint:: (SIdentifier, Maybe SExpression) -> (SIdentifier, Maybe SExpression) -> CodeGenerator [(MInstruction)]
-cgPrint n
+cgPrint:: (SIdentifier) -> CodeGenerator [(Maybe Label, MInstruction)]
+cgPrint n =
     do (ra, la, ua) <- loadVariableAddress n
-       return[(OUTPUT ra)]
+       rt <- tempRegister
+       return $ [(Nothing, EXCH rt ra), (Nothing, OUTPUT rt), (Nothing, EXCH rt ra)]
 
 
 -- | Code generation for conditionals
@@ -666,7 +667,7 @@ cgStatement (ObjectUncall o m args) = cgObjectUncall o m args
 cgStatement (ObjectConstruction tp n) = cgObjectConstruction tp n
 cgStatement (ObjectDestruction tp n)  = cgObjectDestruction tp n
 cgStatement Skip = return []
-cgStatement (Print (n, e))= cgPrint n e
+cgStatement (Print n) = cgPrint n 
 cgStatement (CopyReference _ n m) = cgCopyReference n m
 cgStatement (UnCopyReference _ n m)  = cgUnCopyReference n m
 cgStatement (ArrayConstruction (_, e) n) = cgArrayConstruction e n

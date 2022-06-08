@@ -282,12 +282,11 @@ arrayDestruction =
     <$> arrayTypeName
     <*> identifier    
 
-print:: Parser Statement
-print =
+printf:: Parser Statement
+printf =
     reserved "print"
     >> Print 
-    <$> arrayTypeName
-    <*> identifier    
+    <$> identifier    
 
 statement :: Parser Statement
 statement = try assign
@@ -303,7 +302,7 @@ statement = try assign
         <|> try arrayConstruction <|> objectConstruction
         <|> try arrayDestruction <|> objectDestruction
         <|> skip
-        <|> print
+        <|> printf
         <|> copyReference
         <|> unCopyReference
 

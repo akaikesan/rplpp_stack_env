@@ -177,10 +177,6 @@ saStatement s =
 
         Skip -> pure Skip
 
-        (Print tp (n, e)) -> 
-            Print
-            <$> pure tp
-            <*> maybeArrayCell n e
             
         
         (CopyReference tp (n, e1) (m, e2)) ->
@@ -204,6 +200,10 @@ saStatement s =
             do n' <- saLookup n
                e' <- saExpression e
                return $ ArrayDestruction (tp, e') n'       
+
+        (Print   n) -> 
+            Print
+            <$> saLookup n
                 
     where var (Variable n) = [n]
           var (Binary _ e1 e2) = var e1 ++ var e2

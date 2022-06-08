@@ -128,6 +128,7 @@ meInstruction (BNE r1 r2 l) = return $ BNE r1 r2 l
 meInstruction (BRA l) = return $ BRA l
 meInstruction (EXCH r1 r2) = return $ EXCH r1 r2
 meInstruction (SWAPBR r) = return $ SWAPBR r
+meInstruction (OUTPUT r) = return $ OUTPUT r
 meInstruction (RBRA l) = return $ RBRA l
 meInstruction START = return START
 meInstruction FINISH = return FINISH
