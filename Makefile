@@ -2,7 +2,7 @@ DEFAULT=input.rplpp
 
 
 build:
-	docker exec haskell-docker-starter-haskell stack build
+	docker exec haskell-docker-starter-haskell stack build --allow-different-user
 
 up:
 	docker-compose up -d
