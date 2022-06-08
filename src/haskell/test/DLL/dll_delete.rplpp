@@ -98,6 +98,7 @@ class DoublyLinkedList
 class Program
     DoublyLinkedList list
     int listLength
+    Cell cell_test
 
     method main()
         new DoublyLinkedList list
@@ -123,11 +124,9 @@ class Program
 
 
 
-        local Cell cell_test = nil
 	local int ind = 2
         new Cell cell_test
 
         call list::insertCell(ind, cell_test)
 
 	delocal int ind = 2 
-        delocal Cell cell_test = nil

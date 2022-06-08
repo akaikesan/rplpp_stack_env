@@ -39,6 +39,7 @@ keywords =
      "delocal",
      "new",
      "delete",
+     "print",
      "copy",
      "uncopy"]
 
@@ -281,6 +282,13 @@ arrayDestruction =
     <$> arrayTypeName
     <*> identifier    
 
+print:: Parser Statement
+print =
+    reserved "print"
+    >> Print 
+    <$> arrayTypeName
+    <*> identifier    
+
 statement :: Parser Statement
 statement = try assign
         <|> try assignArrElem <|> swap
@@ -295,6 +303,7 @@ statement = try assign
         <|> try arrayConstruction <|> objectConstruction
         <|> try arrayDestruction <|> objectDestruction
         <|> skip
+        <|> print
         <|> copyReference
         <|> unCopyReference
 

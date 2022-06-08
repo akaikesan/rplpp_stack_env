@@ -87,6 +87,7 @@ data GStmt m v = Assign v ModOp (GExpr v)
                | ArrayConstruction (TypeName, GExpr v) v 
                | ArrayDestruction (TypeName, GExpr v) v 
                | Skip
+               | Print TypeName v
   deriving (Show, Eq)
 
 --Field/Parameter declarations

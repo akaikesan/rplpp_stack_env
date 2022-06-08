@@ -323,6 +323,14 @@ cgSwap n1 n2 = if n1 == n2 then return [] else
        let swap = [(Just l, XOR r1 r2), (Nothing, XOR r2 r1), (Nothing, XOR r1 r2)]
        return $ l1 ++ l2 ++ swap ++ invertInstructions (l1 ++ l2)
 
+
+-- | Code generation for print        
+cgPrint:: (SIdentifier, Maybe SExpression) -> (SIdentifier, Maybe SExpression) -> CodeGenerator [(MInstruction)]
+cgPrint n
+    do (ra, la, ua) <- loadVariableAddress n
+       return[(OUTPUT ra)]
+
+
 -- | Code generation for conditionals
 cgConditional :: SExpression -> [SStatement] -> [SStatement] -> SExpression -> CodeGenerator [(Maybe Label, MInstruction)]
 cgConditional e1 s1 s2 e2 =
@@ -658,6 +666,7 @@ cgStatement (ObjectUncall o m args) = cgObjectUncall o m args
 cgStatement (ObjectConstruction tp n) = cgObjectConstruction tp n
 cgStatement (ObjectDestruction tp n)  = cgObjectDestruction tp n
 cgStatement Skip = return []
+cgStatement (Print (n, e))= cgPrint n e
 cgStatement (CopyReference _ n m) = cgCopyReference n m
 cgStatement (UnCopyReference _ n m)  = cgUnCopyReference n m
 cgStatement (ArrayConstruction (_, e) n) = cgArrayConstruction e n

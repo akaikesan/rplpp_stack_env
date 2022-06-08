@@ -40,6 +40,7 @@ data GInstr i = ADD Register Register
               | BGTZ Register Label
               | BLEZ Register Label
               | BLTZ Register Label
+              | OUTPUT Register
               | BNE Register Register Label
               | BRA Label
               | EXCH Register Register
@@ -79,6 +80,7 @@ invertInstructions = reverse . map (second invertInstruction . first (fmap (++ "
           invertInstruction (RL r i) = RR r i
           invertInstruction (RLV r1 r2) = RRV r1 r2
           invertInstruction (RR r i) = RL r i
+          invertInstruction (OUTPUT r) = OUTPUT r
           invertInstruction (RRV r1 r2) = RLV r1 r2
           invertInstruction (BEQ r1 r2 l) = BEQ r1 r2 $ l ++ "_i"
           invertInstruction (BGEZ r l) = BGEZ r $ l ++ "_i"
@@ -125,6 +127,7 @@ instance Show Instruction where
     show (BGTZ r l) = unwords ["BGTZ  ", show r, l]
     show (BLEZ r l) = unwords ["BLEZ  ", show r, l]
     show (BLTZ r l) = unwords ["BLTZ  ", show r, l]
+    show (OUTPUT r) = unwords ["OUTPUT", show r]
     show (BNE r1 r2 l) = unwords ["BNE   ", show r1, show r2, l]
     show (BRA l) = unwords ["BRA   ", l]
     show (EXCH r1 r2) = unwords ["EXCH  ", show r1, show r2]

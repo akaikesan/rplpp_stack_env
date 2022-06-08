@@ -176,6 +176,12 @@ saStatement s =
                return $ ObjectBlock tp n' stmt'
 
         Skip -> pure Skip
+
+        (Print tp (n, e)) -> 
+            Print
+            <$> pure tp
+            <*> maybeArrayCell n e
+            
         
         (CopyReference tp (n, e1) (m, e2)) ->
             CopyReference
